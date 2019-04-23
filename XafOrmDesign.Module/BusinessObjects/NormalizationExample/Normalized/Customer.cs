@@ -12,11 +12,13 @@ using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.Validation;
 
-namespace XafOrmDesign.Module.BusinessObjects
+namespace XafOrmDesign.Module.BusinessObjects.NormalizationExample.Normalized
 {
-    public class EntityBase : BaseObject
+    [DefaultClassOptions]
+    //[MapInheritance(MapInheritanceType.ParentTable)]
+    public class Customer : Party, ICustomer
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
-        public EntityBase(Session session)
+        public Customer(Session session)
             : base(session)
         {
         }
@@ -27,21 +29,13 @@ namespace XafOrmDesign.Module.BusinessObjects
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
-        private string code;
-        private string displayName;
+        private string taxId;
 
         [Size(SizeAttribute.DefaultStringMappingFieldSize)]
-        public string DisplayName
+        public string TaxId
         {
-            get => displayName;
-            set => SetPropertyValue(nameof(DisplayName), ref displayName, value);
-        }
-
-        [Size(SizeAttribute.DefaultStringMappingFieldSize)]
-        public string Code
-        {
-            get => code;
-            set => SetPropertyValue(nameof(Code), ref code, value);
+            get => taxId;
+            set => SetPropertyValue(nameof(TaxId), ref taxId, value);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using DevExpress.ExpressApp;
 using DevExpress.Data.Filtering;
@@ -8,6 +9,8 @@ using DevExpress.Xpo;
 using DevExpress.ExpressApp.Xpo;
 using DevExpress.Persistent.BaseImpl;
 using XafOrmDesign.Module.BusinessObjects;
+using XafOrmDesign.Module.BusinessObjects.NormalizationExample.Normalized;
+using XafOrmDesign.Module.BusinessObjects.NormalizationExample;
 
 namespace XafOrmDesign.Module.DatabaseUpdate
 {
@@ -22,9 +25,58 @@ namespace XafOrmDesign.Module.DatabaseUpdate
         public override void UpdateDatabaseAfterUpdateSchema()
         {
             base.UpdateDatabaseAfterUpdateSchema();
-            //CreateCustomers();
-            //this.ObjectSpace.CommitChanges();
-            LoadCustomers();
+
+            CreateResult("Create");
+            CreateResult("Read");
+            CreateResult("Update");
+            CreateResult("Delete");
+            this.ObjectSpace.CommitChanges();
+        }
+
+        private void CreateResult(string Operation)
+        {
+            var Insert = this.ObjectSpace.GetObjectByKey<CrudOperationResult>(Operation);
+            if (Insert == null)
+            {
+                Insert = this.ObjectSpace.CreateObject<CrudOperationResult>();
+                Insert.Operation = Operation;
+            }
+        }
+
+        private void FindPerson()
+        {
+            // Tasks performed by method
+        }
+
+        private void CreatePersons()
+        {
+            for (int i = 0; i < 10000; i++)
+            {
+                var PersonWithoutIndex = ObjectSpace.CreateObject<PersonWithOutIndex>();
+                var PersonWithIndex = ObjectSpace.CreateObject<PersonWithIndex>();
+
+                PersonWithoutIndex.Name = $"Person {i}";
+                PersonWithoutIndex.FullName = $"Full Person Name {i}";
+
+                PersonWithIndex.Name = $"Person {i}";
+                PersonWithIndex.FullName = $"Full Person Name {i}";
+            }
+
+            var JoseManuelOjedaWithOutIndex = ObjectSpace.CreateObject<PersonWithOutIndex>();
+            JoseManuelOjedaWithOutIndex.Name = "Jose";
+            JoseManuelOjedaWithOutIndex.FullName = "Jose Manuel Ojeda Melgar";
+
+            var JoseManuelOjedaWithIndex = ObjectSpace.CreateObject<PersonWithIndex>();
+            JoseManuelOjedaWithIndex.Name = "Jose";
+            JoseManuelOjedaWithIndex.FullName = "Jose Manuel Ojeda Melgar";
+
+            var RoccoOjedaWithOutIndex = ObjectSpace.CreateObject<PersonWithOutIndex>();
+            RoccoOjedaWithOutIndex.Name = "Rocco";
+            RoccoOjedaWithOutIndex.FullName = "Rocco Ojeda Melgar";
+
+            var RoccoOjedaWithIndex = ObjectSpace.CreateObject<PersonWithOutIndex>();
+            RoccoOjedaWithIndex.Name = "Rocco";
+            RoccoOjedaWithIndex.FullName = "Rocco Ojeda Melgar";
         }
 
         private void CreateCustomers()
@@ -37,10 +89,6 @@ namespace XafOrmDesign.Module.DatabaseUpdate
 
             // Tasks performed by method
 
-            for (int i = 0; i < 10000; i++)
-            {
-                CreateCustomer(i.ToString(), $"customer {i}", "El Salvador", Guid.NewGuid().ToString());
-            }
             stopwatch.Stop();
 
             Console.WriteLine("Time taken : {0}", stopwatch.Elapsed.TotalMilliseconds);
@@ -49,25 +97,32 @@ namespace XafOrmDesign.Module.DatabaseUpdate
         private void LoadCustomers()
         {
             System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
-
+            var InitialMemory = GC.GetTotalMemory(false);
             // Begin timing
             stopwatch.Start();
             var ListOfCustomers = this.ObjectSpace.CreateCollection(typeof(Customer)).Cast<Customer>().ToArray();
             // Stop timing
             stopwatch.Stop();
-
+            var FinalMemory = GC.GetTotalMemory(false);
+            var TotalMemory = (FinalMemory - InitialMemory) / 1000;
+            Debug.WriteLine(string.Format("{0}:{1}", "TotalMemory in KB", TotalMemory));
             Console.WriteLine("Time taken : {0}", stopwatch.Elapsed.TotalMilliseconds);
         }
 
-        private void CreateCustomer(string Code, string Name, string Country, string TaxId)
+        private void LoadCustomersFromView()
         {
-            Customer theObject = ObjectSpace.FindObject<Customer>(CriteriaOperator.Parse("Code=?", Code));
-            if (theObject == null)
-            {
-                theObject = ObjectSpace.CreateObject<Customer>();
-                theObject.DisplayName = Name;
-                theObject.TaxId = TaxId;
-            }
+            System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
+            var InitialMemory = GC.GetTotalMemory(false);
+            // Begin timing
+            stopwatch.Start();
+            var ListOfCustomers = this.ObjectSpace.CreateDataView(typeof(Customer), "Oid;TaxId", null, null);
+            var ListOfCustomerCount = ListOfCustomers.Count;
+            // Stop timing
+            stopwatch.Stop();
+            var FinalMemory = GC.GetTotalMemory(false);
+            var TotalMemory = (FinalMemory - InitialMemory) / 1000;
+            Debug.WriteLine(string.Format("{0}:{1}", "TotalMemory in KB", TotalMemory));
+            Console.WriteLine("Time taken : {0}", stopwatch.Elapsed.TotalMilliseconds);
         }
 
         public override void UpdateDatabaseBeforeUpdateSchema()

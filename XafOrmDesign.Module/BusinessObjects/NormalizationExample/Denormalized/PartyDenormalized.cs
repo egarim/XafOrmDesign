@@ -12,13 +12,12 @@ using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.Validation;
 
-namespace XafOrmDesign.Module.BusinessObjects
+namespace XafOrmDesign.Module.BusinessObjects.NormalizationExample.Denormalized
 {
-    [DefaultClassOptions]
-    //[MapInheritance(MapInheritanceType.ParentTable)]
-    public class Customer : Party
+    [MapInheritance(MapInheritanceType.ParentTable)]
+    public class PartyDenormalized : EntityBaseDenormalized, IParty
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
-        public Customer(Session session)
+        public PartyDenormalized(Session session)
             : base(session)
         {
         }
@@ -29,13 +28,29 @@ namespace XafOrmDesign.Module.BusinessObjects
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
-        private string taxId;
+        private string email;
+        private string phoneNumber;
+        private string address;
 
         [Size(SizeAttribute.DefaultStringMappingFieldSize)]
-        public string TaxId
+        public string PhoneNumber
         {
-            get => taxId;
-            set => SetPropertyValue(nameof(TaxId), ref taxId, value);
+            get => phoneNumber;
+            set => SetPropertyValue(nameof(PhoneNumber), ref phoneNumber, value);
+        }
+
+        [Size(SizeAttribute.DefaultStringMappingFieldSize)]
+        public string Email
+        {
+            get => email;
+            set => SetPropertyValue(nameof(Email), ref email, value);
+        }
+
+        [Size(SizeAttribute.DefaultStringMappingFieldSize)]
+        public string Address
+        {
+            get => address;
+            set => SetPropertyValue(nameof(Address), ref address, value);
         }
     }
 }

@@ -12,12 +12,11 @@ using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.Validation;
 
-namespace XafOrmDesign.Module.BusinessObjects
+namespace XafOrmDesign.Module.BusinessObjects.NormalizationExample.Denormalized
 {
-    //[MapInheritance(MapInheritanceType.ParentTable)]
-    public class Party : EntityBase
+    public class EntityBaseDenormalized : BaseObject, IEntityBase
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
-        public Party(Session session)
+        public EntityBaseDenormalized(Session session)
             : base(session)
         {
         }
@@ -28,29 +27,21 @@ namespace XafOrmDesign.Module.BusinessObjects
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
-        private string email;
-        private string phoneNumber;
-        private string address;
+        private string code;
+        private string displayName;
 
         [Size(SizeAttribute.DefaultStringMappingFieldSize)]
-        public string PhoneNumber
+        public string DisplayName
         {
-            get => phoneNumber;
-            set => SetPropertyValue(nameof(PhoneNumber), ref phoneNumber, value);
+            get => displayName;
+            set => SetPropertyValue(nameof(DisplayName), ref displayName, value);
         }
 
         [Size(SizeAttribute.DefaultStringMappingFieldSize)]
-        public string Email
+        public string Code
         {
-            get => email;
-            set => SetPropertyValue(nameof(Email), ref email, value);
-        }
-
-        [Size(SizeAttribute.DefaultStringMappingFieldSize)]
-        public string Address
-        {
-            get => address;
-            set => SetPropertyValue(nameof(Address), ref address, value);
+            get => code;
+            set => SetPropertyValue(nameof(Code), ref code, value);
         }
     }
 }
