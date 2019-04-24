@@ -12,7 +12,7 @@ using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.Validation;
 
-namespace XafOrmDesign.Module.BusinessObjects.NormalizationExample
+namespace XafOrmDesign.Module.BusinessObjects.Results
 {
     [DefaultClassOptions]
     public class CrudOperationResult : XPLiteObject

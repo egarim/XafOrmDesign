@@ -9,10 +9,10 @@ namespace XafOrmDesign.Module
 {
     public static class StopWatch
     {
-        public static Tuple<string, Double, double> Start(Action Action, string MethodDescription)
+        public static Tuple<string, double> Start(Action Action, string MethodDescription)
         {
             // Create new stopwatch
-            var InitialMemory = GC.GetTotalMemory(false);
+
             System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
 
             // Begin timing
@@ -20,12 +20,10 @@ namespace XafOrmDesign.Module
             Action.Invoke();
             // End timing
             stopwatch.Stop();
-            var FinalMemory = GC.GetTotalMemory(false);
-            var TotalMemory = (FinalMemory - InitialMemory) / 1000;
 
-            string value = $"Time taken by {MethodDescription} : {stopwatch.Elapsed.TotalMilliseconds} memory usage {TotalMemory}";
+            string value = $"Time taken by {MethodDescription} : {stopwatch.Elapsed.TotalMilliseconds}";
             Debug.WriteLine(value);
-            return new Tuple<string, double, double>(value, stopwatch.Elapsed.TotalMilliseconds, TotalMemory);
+            return new Tuple<string, double>(value, stopwatch.Elapsed.TotalMilliseconds);
         }
     }
 }

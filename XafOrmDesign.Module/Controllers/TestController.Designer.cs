@@ -1,6 +1,6 @@
 ﻿namespace XafOrmDesign.Module.Controllers
 {
-    partial class CustomerController
+    partial class TestController
     {
         /// <summary>
         /// Required designer variable.
@@ -40,6 +40,9 @@
             this.saReadFullObjects = new DevExpress.ExpressApp.Actions.SimpleAction(this.components);
             this.saReadObjectsFromView = new DevExpress.ExpressApp.Actions.SimpleAction(this.components);
             this.saResetAllResults = new DevExpress.ExpressApp.Actions.SimpleAction(this.components);
+            this.saCreatePersonData = new DevExpress.ExpressApp.Actions.SimpleAction(this.components);
+            this.saSearchPersonWithoutIndex = new DevExpress.ExpressApp.Actions.SimpleAction(this.components);
+            this.saSearchPersonWithIndex = new DevExpress.ExpressApp.Actions.SimpleAction(this.components);
             // 
             // saCreateCustomerDenormalizedForm
             // 
@@ -129,7 +132,31 @@
             this.saResetAllResults.ToolTip = null;
             this.saResetAllResults.Execute += new DevExpress.ExpressApp.Actions.SimpleActionExecuteEventHandler(this.saResetAllResults_Execute);
             // 
-            // CustomerController
+            // saCreatePersonData
+            // 
+            this.saCreatePersonData.Caption = "Create Persons";
+            this.saCreatePersonData.ConfirmationMessage = null;
+            this.saCreatePersonData.Id = "0d6bf970-d8f7-4136-b5af-7721be331d1a";
+            this.saCreatePersonData.ToolTip = null;
+            this.saCreatePersonData.Execute += new DevExpress.ExpressApp.Actions.SimpleActionExecuteEventHandler(this.saCreatePersonData_Execute);
+            // 
+            // saSearchPersonWithoutIndex
+            // 
+            this.saSearchPersonWithoutIndex.Caption = "Search Person Without Index";
+            this.saSearchPersonWithoutIndex.ConfirmationMessage = null;
+            this.saSearchPersonWithoutIndex.Id = "5fc76138-0812-44ac-8573-ed5e12cc1edd";
+            this.saSearchPersonWithoutIndex.ToolTip = null;
+            this.saSearchPersonWithoutIndex.Execute += new DevExpress.ExpressApp.Actions.SimpleActionExecuteEventHandler(this.saSearchPersonWithoutIndex_Execute);
+            // 
+            // saSearchPersonWithIndex
+            // 
+            this.saSearchPersonWithIndex.Caption = "Search Person With Index";
+            this.saSearchPersonWithIndex.ConfirmationMessage = null;
+            this.saSearchPersonWithIndex.Id = "7b2de34c-f595-4e4b-88de-f876f175bf3d";
+            this.saSearchPersonWithIndex.ToolTip = null;
+            this.saSearchPersonWithIndex.Execute += new DevExpress.ExpressApp.Actions.SimpleActionExecuteEventHandler(this.saSearchPersonWithIndex_Execute);
+            // 
+            // TestController
             // 
             this.Actions.Add(this.saCreateCustomerDenormalizedForm);
             this.Actions.Add(this.saCreateCustomerNormalizedForm);
@@ -142,6 +169,9 @@
             this.Actions.Add(this.saReadFullObjects);
             this.Actions.Add(this.saReadObjectsFromView);
             this.Actions.Add(this.saResetAllResults);
+            this.Actions.Add(this.saCreatePersonData);
+            this.Actions.Add(this.saSearchPersonWithoutIndex);
+            this.Actions.Add(this.saSearchPersonWithIndex);
 
         }
 
@@ -158,5 +188,8 @@
         private DevExpress.ExpressApp.Actions.SimpleAction saReadFullObjects;
         private DevExpress.ExpressApp.Actions.SimpleAction saReadObjectsFromView;
         private DevExpress.ExpressApp.Actions.SimpleAction saResetAllResults;
+        private DevExpress.ExpressApp.Actions.SimpleAction saCreatePersonData;
+        private DevExpress.ExpressApp.Actions.SimpleAction saSearchPersonWithoutIndex;
+        private DevExpress.ExpressApp.Actions.SimpleAction saSearchPersonWithIndex;
     }
 }

@@ -9,9 +9,7 @@ using DevExpress.Xpo;
 using DevExpress.ExpressApp.Xpo;
 using DevExpress.Persistent.BaseImpl;
 using XafOrmDesign.Module.BusinessObjects;
-using XafOrmDesign.Module.BusinessObjects.NormalizationExample.Normalized;
-using XafOrmDesign.Module.BusinessObjects.NormalizationExample;
-using XafOrmDesign.Module.BusinessObjects.MemoryUsage;
+using XafOrmDesign.Module.BusinessObjects.Results;
 
 namespace XafOrmDesign.Module.DatabaseUpdate
 {
@@ -55,70 +53,8 @@ namespace XafOrmDesign.Module.DatabaseUpdate
             }
         }
 
-        private void FindPerson()
-        {
-            // Tasks performed by method
-        }
-
         private void CreatePersons()
         {
-            for (int i = 0; i < 10000; i++)
-            {
-                var PersonWithoutIndex = ObjectSpace.CreateObject<PersonWithOutIndex>();
-                var PersonWithIndex = ObjectSpace.CreateObject<PersonWithIndex>();
-
-                PersonWithoutIndex.Name = $"Person {i}";
-                PersonWithoutIndex.FullName = $"Full Person Name {i}";
-
-                PersonWithIndex.Name = $"Person {i}";
-                PersonWithIndex.FullName = $"Full Person Name {i}";
-            }
-
-            var JoseManuelOjedaWithOutIndex = ObjectSpace.CreateObject<PersonWithOutIndex>();
-            JoseManuelOjedaWithOutIndex.Name = "Jose";
-            JoseManuelOjedaWithOutIndex.FullName = "Jose Manuel Ojeda Melgar";
-
-            var JoseManuelOjedaWithIndex = ObjectSpace.CreateObject<PersonWithIndex>();
-            JoseManuelOjedaWithIndex.Name = "Jose";
-            JoseManuelOjedaWithIndex.FullName = "Jose Manuel Ojeda Melgar";
-
-            var RoccoOjedaWithOutIndex = ObjectSpace.CreateObject<PersonWithOutIndex>();
-            RoccoOjedaWithOutIndex.Name = "Rocco";
-            RoccoOjedaWithOutIndex.FullName = "Rocco Ojeda Melgar";
-
-            var RoccoOjedaWithIndex = ObjectSpace.CreateObject<PersonWithOutIndex>();
-            RoccoOjedaWithIndex.Name = "Rocco";
-            RoccoOjedaWithIndex.FullName = "Rocco Ojeda Melgar";
-        }
-
-        private void CreateCustomers()
-        {
-            // Create new stopwatch
-            System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
-
-            // Begin timing
-            stopwatch.Start();
-
-            // Tasks performed by method
-
-            stopwatch.Stop();
-
-            Console.WriteLine("Time taken : {0}", stopwatch.Elapsed.TotalMilliseconds);
-        }
-
-        private void LoadCustomers()
-        {
-            System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
-            var InitialMemory = GC.GetTotalMemory(false);
-            // Begin timing
-            stopwatch.Start();
-
-            // Stop timing
-            stopwatch.Stop();
-            var FinalMemory = GC.GetTotalMemory(false);
-            var TotalMemory = (FinalMemory - InitialMemory) / 1000;
-            Debug.WriteLine(string.Format("{0}:{1}", "TotalMemory in KB", TotalMemory));
-            Console.WriteLine("Time taken : {0}", stopwatch.Elapsed.TotalMilliseconds);
         }
 
         public override void UpdateDatabaseBeforeUpdateSchema()

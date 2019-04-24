@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
-using XafOrmDesign.Module.BusinessObjects.NormalizationExample.Denormalized;
 using DevExpress.Xpo;
 using DevExpress.ExpressApp;
 using System.ComponentModel;

@@ -86,7 +86,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BusinessObjects\MemoryUsage\MemoryUsageResult.cs" />
+    <Compile Include="BusinessObjects\Results\MemoryUsageResult.cs" />
     <Compile Include="BusinessObjects\NormalizationExample\Denormalized\CustomerDenormalized.cs" />
     <Compile Include="BusinessObjects\NormalizationExample\Denormalized\EntityBaseDenormalized.cs" />
     <Compile Include="BusinessObjects\NormalizationExample\Denormalized\PartyDenormalized.cs" />
@@ -97,16 +97,16 @@
     <Compile Include="BusinessObjects\NormalizationExample\IEntityBase.cs" />
     <Compile Include="BusinessObjects\NormalizationExample\IParty.cs" />
     <Compile Include="BusinessObjects\NormalizationExample\ICustomer.cs" />
-    <Compile Include="BusinessObjects\NormalizationExample\CrudOperationResult.cs" />
+    <Compile Include="BusinessObjects\Results\CrudOperationResult.cs" />
     <Compile Include="BusinessObjects\Order.cs" />
     <Compile Include="BusinessObjects\OrderDetail.cs" />
     <Compile Include="BusinessObjects\NormalizationExample\Normalized\Party.cs" />
     <Compile Include="BusinessObjects\IndexExample\PersonWithOutIndex.cs" />
-    <Compile Include="Controllers\CustomerController.cs">
+    <Compile Include="Controllers\TestController.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controllers\CustomerController.Designer.cs">
-      <DependentUpon>CustomerController.cs</DependentUpon>
+    <Compile Include="Controllers\TestController.Designer.cs">
+      <DependentUpon>TestController.cs</DependentUpon>
     </Compile>
     <Compile Include="DatabaseUpdate\Updater.cs" />
     <Compile Include="Module.cs">
@@ -119,8 +119,8 @@
     <Compile Include="StopWatch.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Controllers\CustomerController.resx">
-      <DependentUpon>CustomerController.cs</DependentUpon>
+    <EmbeddedResource Include="Controllers\TestController.resx">
+      <DependentUpon>TestController.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
     <EmbeddedResource Include="Properties\licenses.licx" />

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using XafOrmDesign.Module.BusinessObjects.NormalizationExample.Normalized;
+using XafOrmDesign.Module.BusinessObjects.Results;
 using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Actions;
@@ -16,16 +17,16 @@ using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using XafOrmDesign.Module.BusinessObjects.NormalizationExample.Denormalized;
 using DevExpress.Xpo.DB;
-using XafOrmDesign.Module.BusinessObjects.NormalizationExample;
 using System.Diagnostics;
-using XafOrmDesign.Module.BusinessObjects.MemoryUsage;
+using XafOrmDesign.Module.BusinessObjects;
+using DevExpress.ExpressApp.Xpo;
 
 namespace XafOrmDesign.Module.Controllers
 {
     // For more typical usage scenarios, be sure to check out https://documentation.devexpress.com/eXpressAppFramework/clsDevExpressExpressAppViewControllertopic.aspx.
-    public partial class CustomerController : ViewController
+    public partial class TestController : ViewController
     {
-        public CustomerController()
+        public TestController()
         {
             InitializeComponent();
             // Target required Views (via the TargetXXX properties) and create their Actions.
@@ -250,6 +251,67 @@ namespace XafOrmDesign.Module.Controllers
                 item.Percentage = "";
             }
             this.View.ObjectSpace.CommitChanges();
+        }
+
+        private void saCreatePersonData_Execute(object sender, SimpleActionExecuteEventArgs e)
+        {
+            IObjectSpace objectSpace = this.Application.CreateObjectSpace();
+            for (int i = 0; i < 10000; i++)
+            {
+                var PersonWithoutIndex = objectSpace.CreateObject<PersonWithOutIndex>();
+                var PersonWithIndex = objectSpace.CreateObject<PersonWithIndex>();
+
+                PersonWithoutIndex.Name = $"Person {i}";
+                PersonWithoutIndex.FullName = $"Full Person Name {i}";
+
+                PersonWithIndex.Name = $"Person {i}";
+                PersonWithIndex.FullName = $"Full Person Name {i}";
+            }
+
+            var JoseManuelOjedaWithOutIndex = objectSpace.CreateObject<PersonWithOutIndex>();
+            JoseManuelOjedaWithOutIndex.Name = "Jose";
+            JoseManuelOjedaWithOutIndex.FullName = "Jose Manuel Ojeda Melgar";
+
+            var JoseManuelOjedaWithIndex = objectSpace.CreateObject<PersonWithIndex>();
+            JoseManuelOjedaWithIndex.Name = "Jose";
+            JoseManuelOjedaWithIndex.FullName = "Jose Manuel Ojeda Melgar";
+
+            var RoccoOjedaWithOutIndex = objectSpace.CreateObject<PersonWithOutIndex>();
+            RoccoOjedaWithOutIndex.Name = "Rocco";
+            RoccoOjedaWithOutIndex.FullName = "Rocco Ojeda Melgar";
+
+            var RoccoOjedaWithIndex = objectSpace.CreateObject<PersonWithOutIndex>();
+            RoccoOjedaWithIndex.Name = "Rocco";
+            RoccoOjedaWithIndex.FullName = "Rocco Ojeda Melgar";
+            objectSpace.CommitChanges();
+            XPObjectSpace xPObjectSpace = (objectSpace as XPObjectSpace);
+            xPObjectSpace.Session.ExecuteNonQuery("ALTER INDEX ALL ON PersonWithIndex REBUILD;");
+            xPObjectSpace.Session.ExecuteNonQuery("ALTER INDEX ALL ON PersonWithOutIndex REBUILD;");
+        }
+
+        private void saSearchPersonWithoutIndex_Execute(object sender, SimpleActionExecuteEventArgs e)
+        {
+            GC.Collect();
+            var Result = StopWatch.Start(() =>
+            {
+                var Os = this.Application.CreateObjectSpace();
+
+                var JoseManuel = Os.FindObject<PersonWithOutIndex>(new BinaryOperator("FullName", "Jose Manuel Ojeda Melgar"));
+            }, "Search person without index on FullName");
+        }
+
+        private void saSearchPersonWithIndex_Execute(object sender, SimpleActionExecuteEventArgs e)
+        {
+            GC.Collect();
+            var Result = StopWatch.Start(() =>
+            {
+                var Os = this.Application.CreateObjectSpace();
+
+                var JoseManuel = Os.FindObject<PersonWithIndex>(new BinaryOperator("FullName", "Jose Manuel Ojeda Melgar"));
+            }, "Search person with index on FullName");
+            //var Update = this.ObjectSpace.GetObjectByKey<CrudOperationResult>("Update");
+            //Update.Normalized = Result.Item2;
+            //this.ObjectSpace.CommitChanges();
         }
     }
 }
