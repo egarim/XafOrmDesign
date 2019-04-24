@@ -12,12 +12,17 @@ using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.Validation;
 
-namespace XafOrmDesign.Module.BusinessObjects.NormalizationExample
+namespace XafOrmDesign.Module.BusinessObjects.MemoryUsage
 {
     [DefaultClassOptions]
-    public class CrudOperationResult : XPLiteObject
+    //[ImageName("BO_Contact")]
+    //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
+    //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
+    //[Persistent("DatabaseTableName")]
+    // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
+    public class MemoryUsageResult : XPLiteObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
-        public CrudOperationResult(Session session)
+        public MemoryUsageResult(Session session)
             : base(session)
         {
         }
@@ -30,8 +35,8 @@ namespace XafOrmDesign.Module.BusinessObjects.NormalizationExample
 
         private string operation;
         private string percentage;
-        private double denormalized;
-        private double normalized;
+        private double partialObject;
+        private double fullObject;
 
         [Browsable(true)]
         [Key(false)]
@@ -42,16 +47,16 @@ namespace XafOrmDesign.Module.BusinessObjects.NormalizationExample
             set => SetPropertyValue(nameof(Operation), ref operation, value);
         }
 
-        public double Normalized
+        public double FullObject
         {
-            get => normalized;
-            set => SetPropertyValue(nameof(Normalized), ref normalized, value);
+            get => fullObject;
+            set => SetPropertyValue(nameof(FullObject), ref fullObject, value);
         }
 
-        public double Denormalized
+        public double PartialObject
         {
-            get => denormalized;
-            set => SetPropertyValue(nameof(Denormalized), ref denormalized, value);
+            get => partialObject;
+            set => SetPropertyValue(nameof(PartialObject), ref partialObject, value);
         }
 
         [ModelDefault("DisplayFormat", "##.## %")]
@@ -63,9 +68,9 @@ namespace XafOrmDesign.Module.BusinessObjects.NormalizationExample
 
         protected override void OnSaving()
         {
-            if (Normalized > 0 && Denormalized > 0)
+            if (FullObject > 0 && PartialObject > 0)
             {
-                var Round = Math.Round((Denormalized * 100) / Normalized, 2);
+                var Round = Math.Round((PartialObject * 100) / FullObject, 2);
                 Percentage = Round.ToString() + "%";
             }
 

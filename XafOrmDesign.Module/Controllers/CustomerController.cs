@@ -58,8 +58,10 @@ namespace XafOrmDesign.Module.Controllers
                     Customer.DisplayName = $"customer {i}";
                     Customer.Code = $"Code {i}";
                     Customer.TaxId = "Abc123";
-                    Os.CommitChanges();
+                    Customer.Email = "email@email.com";
+                    Customer.PhoneNumber = "+795211111111";
                 }
+                Os.CommitChanges();
             }, "Insert Customers Normalized Schema");
             var Insert = this.ObjectSpace.GetObjectByKey<CrudOperationResult>("Create");
             Insert.Normalized = Result.Item2;
@@ -77,8 +79,10 @@ namespace XafOrmDesign.Module.Controllers
                     Customer.DisplayName = $"customer {i}";
                     Customer.Code = $"Code {i}";
                     Customer.TaxId = "Abc123";
-                    Os.CommitChanges();
+                    Customer.Email = "email@email.com";
+                    Customer.PhoneNumber = "+795211111111";
                 }
+                Os.CommitChanges();
             }, "Insert Customers Denormalized Schema");
             var Insert = this.ObjectSpace.GetObjectByKey<CrudOperationResult>("Create");
             Insert.Denormalized = Result.Item2;
@@ -108,6 +112,68 @@ namespace XafOrmDesign.Module.Controllers
             }, "Delete Customers Denormalized Schema");
             var Delete = this.ObjectSpace.GetObjectByKey<CrudOperationResult>("Delete");
             Delete.Denormalized = Result.Item2;
+            this.ObjectSpace.CommitChanges();
+        }
+
+        private void saReadCustomersNormalized_Execute(object sender, SimpleActionExecuteEventArgs e)
+        {
+            var Result = StopWatch.Start(() =>
+            {
+                var Os = this.Application.CreateObjectSpace();
+
+                var List = Os.CreateCollection(typeof(Customer), null).Cast<Customer>().ToList();
+            }, "Read Customers Normalized Schema");
+            var Delete = this.ObjectSpace.GetObjectByKey<CrudOperationResult>("Read");
+            Delete.Normalized = Result.Item2;
+            this.ObjectSpace.CommitChanges();
+        }
+
+        private void saReadCustomersDenormalized_Execute(object sender, SimpleActionExecuteEventArgs e)
+        {
+            var Result = StopWatch.Start(() =>
+            {
+                var Os = this.Application.CreateObjectSpace();
+
+                var List = Os.CreateCollection(typeof(CustomerDenormalized), null).Cast<CustomerDenormalized>().ToList();
+            }, "Read Customers Denormalized Schema");
+            var Delete = this.ObjectSpace.GetObjectByKey<CrudOperationResult>("Read");
+            Delete.Denormalized = Result.Item2;
+            this.ObjectSpace.CommitChanges();
+        }
+
+        private void saUpdateCustomerDenormalized_Execute(object sender, SimpleActionExecuteEventArgs e)
+        {
+            var Result = StopWatch.Start(() =>
+            {
+                var Os = this.Application.CreateObjectSpace();
+
+                var List = Os.CreateCollection(typeof(CustomerDenormalized), null).Cast<CustomerDenormalized>().ToList();
+                foreach (var item in List)
+                {
+                    item.PhoneNumber = "+503778896";
+                    item.Code = item.Code + "SV";
+                }
+            }, "Update Customers Denormalized Schema");
+            var Update = this.ObjectSpace.GetObjectByKey<CrudOperationResult>("Update");
+            Update.Denormalized = Result.Item2;
+            this.ObjectSpace.CommitChanges();
+        }
+
+        private void saUpdateCustomerNormalized_Execute(object sender, SimpleActionExecuteEventArgs e)
+        {
+            var Result = StopWatch.Start(() =>
+            {
+                var Os = this.Application.CreateObjectSpace();
+
+                var List = Os.CreateCollection(typeof(Customer), null).Cast<CustomerDenormalized>().ToList();
+                foreach (var item in List)
+                {
+                    item.PhoneNumber = "+503778896";
+                    item.Code = item.Code + "SV";
+                }
+            }, "Update Customers Normalized Schema");
+            var Update = this.ObjectSpace.GetObjectByKey<CrudOperationResult>("Update");
+            Update.Normalized = Result.Item2;
             this.ObjectSpace.CommitChanges();
         }
     }

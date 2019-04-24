@@ -33,6 +33,10 @@
             this.saCreateCustomerNormalizedForm = new DevExpress.ExpressApp.Actions.SimpleAction(this.components);
             this.saDeleteCustomersNormalized = new DevExpress.ExpressApp.Actions.SimpleAction(this.components);
             this.saDeleteCustomersDenormalized = new DevExpress.ExpressApp.Actions.SimpleAction(this.components);
+            this.saReadCustomersNormalized = new DevExpress.ExpressApp.Actions.SimpleAction(this.components);
+            this.saReadCustomersDenormalized = new DevExpress.ExpressApp.Actions.SimpleAction(this.components);
+            this.saUpdateCustomerDenormalized = new DevExpress.ExpressApp.Actions.SimpleAction(this.components);
+            this.saUpdateCustomerNormalized = new DevExpress.ExpressApp.Actions.SimpleAction(this.components);
             // 
             // saCreateCustomerDenormalizedForm
             // 
@@ -66,12 +70,48 @@
             this.saDeleteCustomersDenormalized.ToolTip = null;
             this.saDeleteCustomersDenormalized.Execute += new DevExpress.ExpressApp.Actions.SimpleActionExecuteEventHandler(this.saDeleteCustomersDenormalized_Execute);
             // 
+            // saReadCustomersNormalized
+            // 
+            this.saReadCustomersNormalized.Caption = "Read Customers Normalized Schema";
+            this.saReadCustomersNormalized.ConfirmationMessage = null;
+            this.saReadCustomersNormalized.Id = "Delete Customers Normalized Schema";
+            this.saReadCustomersNormalized.ToolTip = null;
+            this.saReadCustomersNormalized.Execute += new DevExpress.ExpressApp.Actions.SimpleActionExecuteEventHandler(this.saReadCustomersNormalized_Execute);
+            // 
+            // saReadCustomersDenormalized
+            // 
+            this.saReadCustomersDenormalized.Caption = "Read Customers Denormalized Schema";
+            this.saReadCustomersDenormalized.ConfirmationMessage = null;
+            this.saReadCustomersDenormalized.Id = "Read Customers Denormalized Schema";
+            this.saReadCustomersDenormalized.ToolTip = null;
+            this.saReadCustomersDenormalized.Execute += new DevExpress.ExpressApp.Actions.SimpleActionExecuteEventHandler(this.saReadCustomersDenormalized_Execute);
+            // 
+            // saUpdateCustomerDenormalized
+            // 
+            this.saUpdateCustomerDenormalized.Caption = "Update Denormalized Schema";
+            this.saUpdateCustomerDenormalized.ConfirmationMessage = null;
+            this.saUpdateCustomerDenormalized.Id = "f9775072-c08b-4a72-9938-099e600316bd";
+            this.saUpdateCustomerDenormalized.ToolTip = null;
+            this.saUpdateCustomerDenormalized.Execute += new DevExpress.ExpressApp.Actions.SimpleActionExecuteEventHandler(this.saUpdateCustomerDenormalized_Execute);
+            // 
+            // saUpdateCustomerNormalized
+            // 
+            this.saUpdateCustomerNormalized.Caption = "Update Normalized Schema";
+            this.saUpdateCustomerNormalized.ConfirmationMessage = null;
+            this.saUpdateCustomerNormalized.Id = "f4f12163-bc4b-4e56-8d34-c2e43ba26b86";
+            this.saUpdateCustomerNormalized.ToolTip = null;
+            this.saUpdateCustomerNormalized.Execute += new DevExpress.ExpressApp.Actions.SimpleActionExecuteEventHandler(this.saUpdateCustomerNormalized_Execute);
+            // 
             // CustomerController
             // 
             this.Actions.Add(this.saCreateCustomerDenormalizedForm);
             this.Actions.Add(this.saCreateCustomerNormalizedForm);
             this.Actions.Add(this.saDeleteCustomersNormalized);
             this.Actions.Add(this.saDeleteCustomersDenormalized);
+            this.Actions.Add(this.saReadCustomersNormalized);
+            this.Actions.Add(this.saReadCustomersDenormalized);
+            this.Actions.Add(this.saUpdateCustomerDenormalized);
+            this.Actions.Add(this.saUpdateCustomerNormalized);
 
         }
 
@@ -81,5 +121,9 @@
         private DevExpress.ExpressApp.Actions.SimpleAction saCreateCustomerNormalizedForm;
         private DevExpress.ExpressApp.Actions.SimpleAction saDeleteCustomersNormalized;
         private DevExpress.ExpressApp.Actions.SimpleAction saDeleteCustomersDenormalized;
+        private DevExpress.ExpressApp.Actions.SimpleAction saReadCustomersNormalized;
+        private DevExpress.ExpressApp.Actions.SimpleAction saReadCustomersDenormalized;
+        private DevExpress.ExpressApp.Actions.SimpleAction saUpdateCustomerDenormalized;
+        private DevExpress.ExpressApp.Actions.SimpleAction saUpdateCustomerNormalized;
     }
 }

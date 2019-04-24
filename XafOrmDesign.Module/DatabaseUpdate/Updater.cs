@@ -11,6 +11,7 @@ using DevExpress.Persistent.BaseImpl;
 using XafOrmDesign.Module.BusinessObjects;
 using XafOrmDesign.Module.BusinessObjects.NormalizationExample.Normalized;
 using XafOrmDesign.Module.BusinessObjects.NormalizationExample;
+using XafOrmDesign.Module.BusinessObjects.MemoryUsage;
 
 namespace XafOrmDesign.Module.DatabaseUpdate
 {
@@ -30,7 +31,18 @@ namespace XafOrmDesign.Module.DatabaseUpdate
             CreateResult("Read");
             CreateResult("Update");
             CreateResult("Delete");
+            CreateMemoryUsageResult("Read");
             this.ObjectSpace.CommitChanges();
+        }
+
+        private void CreateMemoryUsageResult(string Operation)
+        {
+            var MemoryUsageResult = this.ObjectSpace.GetObjectByKey<MemoryUsageResult>(Operation);
+            if (MemoryUsageResult == null)
+            {
+                MemoryUsageResult = this.ObjectSpace.CreateObject<MemoryUsageResult>();
+                MemoryUsageResult.Operation = Operation;
+            }
         }
 
         private void CreateResult(string Operation)
