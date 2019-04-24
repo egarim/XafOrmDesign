@@ -33,6 +33,8 @@ namespace XafOrmDesign.Module.BusinessObjects.MemoryUsage
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
+        private string fullObjectMemoryInKB;
+        private string partialObjectMemoryInKB;
         private string operation;
         private string percentage;
         private double partialObject;
@@ -57,6 +59,20 @@ namespace XafOrmDesign.Module.BusinessObjects.MemoryUsage
         {
             get => partialObject;
             set => SetPropertyValue(nameof(PartialObject), ref partialObject, value);
+        }
+
+        [Size(SizeAttribute.DefaultStringMappingFieldSize)]
+        public string PartialObjectMemoryInKB
+        {
+            get => partialObjectMemoryInKB;
+            set => SetPropertyValue(nameof(PartialObjectMemoryInKB), ref partialObjectMemoryInKB, value);
+        }
+
+        [Size(SizeAttribute.DefaultStringMappingFieldSize)]
+        public string FullObjectMemoryInKB
+        {
+            get => fullObjectMemoryInKB;
+            set => SetPropertyValue(nameof(FullObjectMemoryInKB), ref fullObjectMemoryInKB, value);
         }
 
         [ModelDefault("DisplayFormat", "##.## %")]

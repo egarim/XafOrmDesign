@@ -112,23 +112,7 @@ namespace XafOrmDesign.Module.DatabaseUpdate
             var InitialMemory = GC.GetTotalMemory(false);
             // Begin timing
             stopwatch.Start();
-            var ListOfCustomers = this.ObjectSpace.CreateCollection(typeof(Customer)).Cast<Customer>().ToArray();
-            // Stop timing
-            stopwatch.Stop();
-            var FinalMemory = GC.GetTotalMemory(false);
-            var TotalMemory = (FinalMemory - InitialMemory) / 1000;
-            Debug.WriteLine(string.Format("{0}:{1}", "TotalMemory in KB", TotalMemory));
-            Console.WriteLine("Time taken : {0}", stopwatch.Elapsed.TotalMilliseconds);
-        }
 
-        private void LoadCustomersFromView()
-        {
-            System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
-            var InitialMemory = GC.GetTotalMemory(false);
-            // Begin timing
-            stopwatch.Start();
-            var ListOfCustomers = this.ObjectSpace.CreateDataView(typeof(Customer), "Oid;TaxId", null, null);
-            var ListOfCustomerCount = ListOfCustomers.Count;
             // Stop timing
             stopwatch.Stop();
             var FinalMemory = GC.GetTotalMemory(false);

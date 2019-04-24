@@ -14,6 +14,7 @@ using DevExpress.Persistent.Validation;
 
 namespace XafOrmDesign.Module.BusinessObjects.NormalizationExample.Denormalized
 {
+    [NavigationItem("Denormalized Schema")]
     [MapInheritance(MapInheritanceType.ParentTable)]
     public class PartyDenormalized : EntityBaseDenormalized, IParty
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).

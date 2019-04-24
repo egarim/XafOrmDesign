@@ -14,6 +14,7 @@ using DevExpress.Persistent.Validation;
 
 namespace XafOrmDesign.Module.BusinessObjects.NormalizationExample.Normalized
 {
+    [NavigationItem("Normalized Schema")]
     [DefaultClassOptions]
     //[MapInheritance(MapInheritanceType.ParentTable)]
     public class Customer : Party, ICustomer

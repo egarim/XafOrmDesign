@@ -17,6 +17,8 @@ using DevExpress.Persistent.Validation;
 using XafOrmDesign.Module.BusinessObjects.NormalizationExample.Denormalized;
 using DevExpress.Xpo.DB;
 using XafOrmDesign.Module.BusinessObjects.NormalizationExample;
+using System.Diagnostics;
+using XafOrmDesign.Module.BusinessObjects.MemoryUsage;
 
 namespace XafOrmDesign.Module.Controllers
 {
@@ -70,6 +72,7 @@ namespace XafOrmDesign.Module.Controllers
 
         private void saCreateCustomerDenormalizedForm_Execute(object sender, SimpleActionExecuteEventArgs e)
         {
+            GC.Collect();
             var Result = StopWatch.Start(() =>
             {
                 var Os = this.Application.CreateObjectSpace();
@@ -91,6 +94,7 @@ namespace XafOrmDesign.Module.Controllers
 
         private void saDeleteCustomersNormalized_Execute(object sender, SimpleActionExecuteEventArgs e)
         {
+            GC.Collect();
             var Result = StopWatch.Start(() =>
             {
                 var Os = this.Application.CreateObjectSpace();
@@ -104,6 +108,7 @@ namespace XafOrmDesign.Module.Controllers
 
         private void saDeleteCustomersDenormalized_Execute(object sender, SimpleActionExecuteEventArgs e)
         {
+            GC.Collect();
             var Result = StopWatch.Start(() =>
             {
                 var Os = this.Application.CreateObjectSpace();
@@ -117,6 +122,7 @@ namespace XafOrmDesign.Module.Controllers
 
         private void saReadCustomersNormalized_Execute(object sender, SimpleActionExecuteEventArgs e)
         {
+            GC.Collect();
             var Result = StopWatch.Start(() =>
             {
                 var Os = this.Application.CreateObjectSpace();
@@ -130,6 +136,7 @@ namespace XafOrmDesign.Module.Controllers
 
         private void saReadCustomersDenormalized_Execute(object sender, SimpleActionExecuteEventArgs e)
         {
+            GC.Collect();
             var Result = StopWatch.Start(() =>
             {
                 var Os = this.Application.CreateObjectSpace();
@@ -143,6 +150,7 @@ namespace XafOrmDesign.Module.Controllers
 
         private void saUpdateCustomerDenormalized_Execute(object sender, SimpleActionExecuteEventArgs e)
         {
+            GC.Collect();
             var Result = StopWatch.Start(() =>
             {
                 var Os = this.Application.CreateObjectSpace();
@@ -161,11 +169,12 @@ namespace XafOrmDesign.Module.Controllers
 
         private void saUpdateCustomerNormalized_Execute(object sender, SimpleActionExecuteEventArgs e)
         {
+            GC.Collect();
             var Result = StopWatch.Start(() =>
             {
                 var Os = this.Application.CreateObjectSpace();
 
-                var List = Os.CreateCollection(typeof(Customer), null).Cast<CustomerDenormalized>().ToList();
+                var List = Os.CreateCollection(typeof(Customer), null).Cast<Customer>().ToList();
                 foreach (var item in List)
                 {
                     item.PhoneNumber = "+503778896";
@@ -175,6 +184,72 @@ namespace XafOrmDesign.Module.Controllers
             var Update = this.ObjectSpace.GetObjectByKey<CrudOperationResult>("Update");
             Update.Normalized = Result.Item2;
             this.ObjectSpace.CommitChanges();
+        }
+
+        private void saReadFullObjects_Execute(object sender, SimpleActionExecuteEventArgs e)
+        {
+            GC.Collect();
+            long TotalMemory = 0;
+            var Result = StopWatch.Start(() =>
+            {
+                var Os = this.Application.CreateObjectSpace();
+                var InitialMemory = GC.GetTotalMemory(false);
+
+                var ListOfCustomers = Os.CreateCollection(typeof(Customer)).Cast<Customer>().ToArray();
+
+                var FinalMemory = GC.GetTotalMemory(false);
+
+                TotalMemory = (FinalMemory - InitialMemory) / 1000;
+                Debug.WriteLine(string.Format("{0}:{1}", "TotalMemory in KB", TotalMemory));
+            }, "Update Customers Normalized Schema");
+            var Update = this.ObjectSpace.GetObjectByKey<MemoryUsageResult>("Read");
+            Update.FullObject = Result.Item2;
+            Update.FullObjectMemoryInKB = TotalMemory.ToString() + "Kb";
+            this.ObjectSpace.CommitChanges();
+        }
+
+        private void saReadObjectsFromView_Execute(object sender, SimpleActionExecuteEventArgs e)
+        {
+            GC.Collect();
+            long TotalMemory = 0;
+            var Result = StopWatch.Start(() =>
+            {
+                var Os = this.Application.CreateObjectSpace();
+                var InitialMemory = GC.GetTotalMemory(false);
+
+                var ListOfCustomers = Os.CreateDataView(typeof(Customer), "TaxId", null, null);
+                var ListOfCustomerCount = ListOfCustomers.Count;
+
+                var FinalMemory = GC.GetTotalMemory(false);
+
+                TotalMemory = (FinalMemory - InitialMemory) / 1000;
+                Debug.WriteLine(string.Format("{0}:{1}", "TotalMemory in KB", TotalMemory));
+            }, "Update Customers Normalized Schema");
+            var Update = this.ObjectSpace.GetObjectByKey<MemoryUsageResult>("Read");
+            Update.PartialObject = Result.Item2;
+            Update.PartialObjectMemoryInKB = TotalMemory.ToString() + "Kb";
+            this.ObjectSpace.CommitChanges();
+        }
+
+        private void saResetAllResults_Execute(object sender, SimpleActionExecuteEventArgs e)
+        {
+            var MemoryResults = this.ObjectSpace.CreateCollection(typeof(MemoryUsageResult)).Cast<MemoryUsageResult>();
+            foreach (var item in MemoryResults)
+            {
+                item.PartialObject = 0;
+                item.PartialObjectMemoryInKB = "";
+                item.FullObject = 0;
+                item.FullObjectMemoryInKB = "";
+            }
+
+            var CrudOperationResults = this.ObjectSpace.CreateCollection(typeof(CrudOperationResult)).Cast<CrudOperationResult>();
+            foreach (var item in CrudOperationResults)
+            {
+                item.Normalized = 0;
+                item.Denormalized = 0;
+                item.Percentage = "";
+            }
+            this.View.ObjectSpace.CommitChanges();
         }
     }
 }

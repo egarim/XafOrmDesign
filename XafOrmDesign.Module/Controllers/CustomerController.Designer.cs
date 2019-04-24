@@ -37,6 +37,9 @@
             this.saReadCustomersDenormalized = new DevExpress.ExpressApp.Actions.SimpleAction(this.components);
             this.saUpdateCustomerDenormalized = new DevExpress.ExpressApp.Actions.SimpleAction(this.components);
             this.saUpdateCustomerNormalized = new DevExpress.ExpressApp.Actions.SimpleAction(this.components);
+            this.saReadFullObjects = new DevExpress.ExpressApp.Actions.SimpleAction(this.components);
+            this.saReadObjectsFromView = new DevExpress.ExpressApp.Actions.SimpleAction(this.components);
+            this.saResetAllResults = new DevExpress.ExpressApp.Actions.SimpleAction(this.components);
             // 
             // saCreateCustomerDenormalizedForm
             // 
@@ -102,6 +105,30 @@
             this.saUpdateCustomerNormalized.ToolTip = null;
             this.saUpdateCustomerNormalized.Execute += new DevExpress.ExpressApp.Actions.SimpleActionExecuteEventHandler(this.saUpdateCustomerNormalized_Execute);
             // 
+            // saReadFullObjects
+            // 
+            this.saReadFullObjects.Caption = "Read Full Objects";
+            this.saReadFullObjects.ConfirmationMessage = null;
+            this.saReadFullObjects.Id = "2907813e-c660-4f2e-b9a8-e107b3af1f2d";
+            this.saReadFullObjects.ToolTip = null;
+            this.saReadFullObjects.Execute += new DevExpress.ExpressApp.Actions.SimpleActionExecuteEventHandler(this.saReadFullObjects_Execute);
+            // 
+            // saReadObjectsFromView
+            // 
+            this.saReadObjectsFromView.Caption = "Read Objects From View";
+            this.saReadObjectsFromView.ConfirmationMessage = null;
+            this.saReadObjectsFromView.Id = "0f88c16c-97c9-4875-8620-c691374a2c87";
+            this.saReadObjectsFromView.ToolTip = null;
+            this.saReadObjectsFromView.Execute += new DevExpress.ExpressApp.Actions.SimpleActionExecuteEventHandler(this.saReadObjectsFromView_Execute);
+            // 
+            // saResetAllResults
+            // 
+            this.saResetAllResults.Caption = "Reset Results";
+            this.saResetAllResults.ConfirmationMessage = null;
+            this.saResetAllResults.Id = "8cc49df4-c991-4ac2-bca5-a13945ea58fc";
+            this.saResetAllResults.ToolTip = null;
+            this.saResetAllResults.Execute += new DevExpress.ExpressApp.Actions.SimpleActionExecuteEventHandler(this.saResetAllResults_Execute);
+            // 
             // CustomerController
             // 
             this.Actions.Add(this.saCreateCustomerDenormalizedForm);
@@ -112,6 +139,9 @@
             this.Actions.Add(this.saReadCustomersDenormalized);
             this.Actions.Add(this.saUpdateCustomerDenormalized);
             this.Actions.Add(this.saUpdateCustomerNormalized);
+            this.Actions.Add(this.saReadFullObjects);
+            this.Actions.Add(this.saReadObjectsFromView);
+            this.Actions.Add(this.saResetAllResults);
 
         }
 
@@ -125,5 +155,8 @@
         private DevExpress.ExpressApp.Actions.SimpleAction saReadCustomersDenormalized;
         private DevExpress.ExpressApp.Actions.SimpleAction saUpdateCustomerDenormalized;
         private DevExpress.ExpressApp.Actions.SimpleAction saUpdateCustomerNormalized;
+        private DevExpress.ExpressApp.Actions.SimpleAction saReadFullObjects;
+        private DevExpress.ExpressApp.Actions.SimpleAction saReadObjectsFromView;
+        private DevExpress.ExpressApp.Actions.SimpleAction saResetAllResults;
     }
 }

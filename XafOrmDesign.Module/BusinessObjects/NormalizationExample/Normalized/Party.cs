@@ -15,6 +15,7 @@ using DevExpress.Persistent.Validation;
 
 namespace XafOrmDesign.Module.BusinessObjects.NormalizationExample.Normalized
 {
+    [NavigationItem("Normalized Schema")]
     public class Party : EntityBase, IParty
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public Party(Session session)

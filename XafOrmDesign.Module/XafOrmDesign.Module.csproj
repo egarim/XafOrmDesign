@@ -108,12 +108,6 @@
     <Compile Include="Controllers\CustomerController.Designer.cs">
       <DependentUpon>CustomerController.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\IndexTestController.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\IndexTestController.Designer.cs">
-      <DependentUpon>IndexTestController.cs</DependentUpon>
-    </Compile>
     <Compile Include="DatabaseUpdate\Updater.cs" />
     <Compile Include="Module.cs">
       <SubType>Component</SubType>
@@ -127,9 +121,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Controllers\CustomerController.resx">
       <DependentUpon>CustomerController.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controllers\IndexTestController.resx">
-      <DependentUpon>IndexTestController.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
     <EmbeddedResource Include="Properties\licenses.licx" />

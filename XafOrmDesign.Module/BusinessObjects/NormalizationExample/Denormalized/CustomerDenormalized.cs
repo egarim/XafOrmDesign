@@ -14,6 +14,7 @@ using DevExpress.Persistent.Validation;
 
 namespace XafOrmDesign.Module.BusinessObjects.NormalizationExample.Denormalized
 {
+    [NavigationItem("Denormalized Schema")]
     [DefaultClassOptions]
     [MapInheritance(MapInheritanceType.ParentTable)]
     public class CustomerDenormalized : PartyDenormalized, ICustomer
