@@ -50,6 +50,8 @@ namespace XafOrmDesign.Module.Controllers
             base.OnDeactivated();
         }
 
+        #region CRUD
+
         private void saCreateCustomerNormalizedForm_Execute(object sender, SimpleActionExecuteEventArgs e)
         {
             var Result = StopWatch.Start(() =>
@@ -90,34 +92,6 @@ namespace XafOrmDesign.Module.Controllers
             }, "Insert Customers Denormalized Schema");
             var Insert = this.ObjectSpace.GetObjectByKey<CrudOperationResult>("Create");
             Insert.Denormalized = Result.Item2;
-            this.ObjectSpace.CommitChanges();
-        }
-
-        private void saDeleteCustomersNormalized_Execute(object sender, SimpleActionExecuteEventArgs e)
-        {
-            GC.Collect();
-            var Result = StopWatch.Start(() =>
-            {
-                var Os = this.Application.CreateObjectSpace();
-                Os.Delete(Os.CreateCollection(typeof(Customer), null));
-                Os.CommitChanges();
-            }, "Delete Customers Normalized Schema");
-            var Delete = this.ObjectSpace.GetObjectByKey<CrudOperationResult>("Delete");
-            Delete.Normalized = Result.Item2;
-            this.ObjectSpace.CommitChanges();
-        }
-
-        private void saDeleteCustomersDenormalized_Execute(object sender, SimpleActionExecuteEventArgs e)
-        {
-            GC.Collect();
-            var Result = StopWatch.Start(() =>
-            {
-                var Os = this.Application.CreateObjectSpace();
-                Os.Delete(Os.CreateCollection(typeof(CustomerDenormalized), null));
-                Os.CommitChanges();
-            }, "Delete Customers Denormalized Schema");
-            var Delete = this.ObjectSpace.GetObjectByKey<CrudOperationResult>("Delete");
-            Delete.Denormalized = Result.Item2;
             this.ObjectSpace.CommitChanges();
         }
 
@@ -187,6 +161,38 @@ namespace XafOrmDesign.Module.Controllers
             this.ObjectSpace.CommitChanges();
         }
 
+        private void saDeleteCustomersNormalized_Execute(object sender, SimpleActionExecuteEventArgs e)
+        {
+            GC.Collect();
+            var Result = StopWatch.Start(() =>
+            {
+                var Os = this.Application.CreateObjectSpace();
+                Os.Delete(Os.CreateCollection(typeof(Customer), null));
+                Os.CommitChanges();
+            }, "Delete Customers Normalized Schema");
+            var Delete = this.ObjectSpace.GetObjectByKey<CrudOperationResult>("Delete");
+            Delete.Normalized = Result.Item2;
+            this.ObjectSpace.CommitChanges();
+        }
+
+        private void saDeleteCustomersDenormalized_Execute(object sender, SimpleActionExecuteEventArgs e)
+        {
+            GC.Collect();
+            var Result = StopWatch.Start(() =>
+            {
+                var Os = this.Application.CreateObjectSpace();
+                Os.Delete(Os.CreateCollection(typeof(CustomerDenormalized), null));
+                Os.CommitChanges();
+            }, "Delete Customers Denormalized Schema");
+            var Delete = this.ObjectSpace.GetObjectByKey<CrudOperationResult>("Delete");
+            Delete.Denormalized = Result.Item2;
+            this.ObjectSpace.CommitChanges();
+        }
+
+        #endregion CRUD
+
+        #region ReadObjects
+
         private void saReadFullObjects_Execute(object sender, SimpleActionExecuteEventArgs e)
         {
             GC.Collect();
@@ -232,6 +238,8 @@ namespace XafOrmDesign.Module.Controllers
             this.ObjectSpace.CommitChanges();
         }
 
+        #endregion ReadObjects
+
         private void saResetAllResults_Execute(object sender, SimpleActionExecuteEventArgs e)
         {
             var MemoryResults = this.ObjectSpace.CreateCollection(typeof(MemoryUsageResult)).Cast<MemoryUsageResult>();
@@ -252,6 +260,8 @@ namespace XafOrmDesign.Module.Controllers
             }
             this.View.ObjectSpace.CommitChanges();
         }
+
+        #region IndexSection
 
         private void saCreatePersonData_Execute(object sender, SimpleActionExecuteEventArgs e)
         {
@@ -313,5 +323,7 @@ namespace XafOrmDesign.Module.Controllers
             //Update.Normalized = Result.Item2;
             //this.ObjectSpace.CommitChanges();
         }
+
+        #endregion IndexSection
     }
 }
